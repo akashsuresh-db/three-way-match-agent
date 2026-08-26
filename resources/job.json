@@ -1,0 +1,62 @@
+{
+  "name": "three-way-match-agent-pipeline",
+  "tags": {"project": "three_way_match", "owner": "akash.s"},
+  "tasks": [
+    {
+      "task_key": "generate_data",
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/01_generate_data.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    },
+    {
+      "task_key": "uc_functions",
+      "depends_on": [{"task_key": "generate_data"}],
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/00_uc_functions.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    },
+    {
+      "task_key": "match_and_exceptions",
+      "depends_on": [{"task_key": "uc_functions"}],
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/02_match_and_exceptions.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    },
+    {
+      "task_key": "ai_classify",
+      "depends_on": [{"task_key": "match_and_exceptions"}],
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/03_ai_classify.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    },
+    {
+      "task_key": "contract_validation",
+      "depends_on": [{"task_key": "ai_classify"}],
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/04_contract_validation.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    },
+    {
+      "task_key": "duplicate_gate",
+      "depends_on": [{"task_key": "contract_validation"}],
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/05_duplicate_gate.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    },
+    {
+      "task_key": "approvals_and_audit",
+      "depends_on": [{"task_key": "duplicate_gate"}],
+      "sql_task": {
+        "file": {"path": "/Workspace/Users/akash.s@databricks.com/three_way_match/sql/06_approvals_and_audit.sql", "source": "WORKSPACE"},
+        "warehouse_id": "59003c369444b958"
+      }
+    }
+  ],
+  "queue": {"enabled": true}
+}

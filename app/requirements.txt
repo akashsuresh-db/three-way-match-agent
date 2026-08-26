@@ -1,0 +1,4 @@
+fastapi
+uvicorn[standard]
+databricks-sdk>=0.30.0
+pydantic>=2

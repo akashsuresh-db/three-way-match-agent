@@ -1,0 +1,19 @@
+command:
+  - "python"
+  - "-m"
+  - "uvicorn"
+  - "app:app"
+  - "--host"
+  - "0.0.0.0"
+  - "--port"
+  - "8000"
+
+env:
+  - name: APP_CATALOG
+    value: "lakemeter_demo_catalog"
+  - name: APP_SCHEMA
+    value: "three_way_match"
+  - name: DATABRICKS_WAREHOUSE_ID
+    value: "59003c369444b958"
+  - name: GENIE_SPACE_ID
+    value: "01f187d18e7f1defbc719ddabafae0c6"
